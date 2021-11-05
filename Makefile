@@ -6,51 +6,66 @@
 #    By: mhuerta <mhuerta@student.42.us.org>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/22 11:48:08 by mhuerta           #+#    #+#              #
-#    Updated: 2021/11/01 03:04:09 by melissa          ###   ########.fr        #
+#    Updated: 2021/11/05 02:29:07 by melissa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re libft minilibx
 
-NAME = minigame
+NAME = so_long
 
-SRC = minigame.c
-OBJ = $(SRC:.c=.o)
+SRCS_FILES = so_long.c map.c error.c
+SRCS_DIR = srcs
+
+HEADER_FILE = includes/so_long.h
+
+MLX_DIR = libraries/mlx
+LIB_DIR = libraries/libft
+MINILIBX = $(MLX_DIR)/libmlx.a
+LIBFT = $(LIB_DIR)/libft.a
+
+SRCS = $(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
+OBJS = $(SRCS:.c=.o)
 	
-CC = gcc
+CC = clang
 CFLAGS = -Wall -Werror -Wextra
-MLX_FLAGS = -L /mlx -lmlx -lXext -lX11
-
-INCS_DIR = includes/
-MLX_DIR = mlx/ 
+MLX_FLAGS = -L -lmlx -lXext -lX11
 
 # Colors
 RESET='\033[0m'
 GREEN='\033[32m'
 PURPLE='\033[35m'
 
+.c.o:
+	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(LIBFT) $(MINILIBX) $(OBJS) $(HEADER_FILE)
 	@echo $(PURPLE) "Compiling $(NAME)..." $(RESET)
-	$(CC) $(CFLAGS) $(OBJ) $(MLX_FLAGS) -o $(NAME)
-	@echo $(GREEN) "minigame has been compiled" $(RESET)
-	@rm $(OBJ)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MINILIBX) $(MLX_FLAGS) -o $(NAME)
+	@echo $(GREEN) "so_long has been compiled" $(RESET)
+	@rm $(OBJS)
 
-$(OBJ): $(SRC)
-	@echo $(PURPLE) "Making object files..." $(RESET)
-	@$(CC) $(CFLAGS) -c $(SRC)
+$(LIBFT):
+	make -C $(LIB_DIR)
 
+$(MINILIBX):
+	make -C $(MLX_DIR)
+	
 run: all
 	@echo "Running game... $(NAME)"
 	@./$(NAME)
 
 clean:
 	@echo $(PURPLE) "Removing object files..." $(RESET)
-	rm -rf $(OBJ)
+	make -C $(LIB_DIR) clean
+	make -C $(MLX_DIR) clean
+	rm -rf $(OBJS)
 
 fclean: clean
 	@echo $(PURPLE) "Removing $(NAME)..." $(RESET)
+	make -C $(LIB_DIR) fclean
 	rm -rf $(NAME)
 
 re: fclean all
