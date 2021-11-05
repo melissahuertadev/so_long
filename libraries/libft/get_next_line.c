@@ -3,64 +3,115 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhuerta <mhuerta@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: mhuerta <mhuerta@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/10 20:40:44 by mhuerta           #+#    #+#             */
-/*   Updated: 2021/11/05 05:11:09 by melissa          ###   ########.fr       */
+/*   Created: 2019/07/29 03:04:34 by mhuerta           #+#    #+#             */
+/*   Updated: 2021/11/05 08:53:04 by melissa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_read_frkg_line(char **sb, int fd, char **l, int ret)
+static char	*get_all(char **sb)
 {
-	char	*t;
-	int		num;
+	char	*tmp;
+	int		i;
 
-	num = 0;
-	while (sb[0][num] == '\n' && sb[0][num] == '\0')
-		num++;
-	if (sb[0][num] == '\n')
+	i = 0;
+	if (!sb)
+		return (NULL);
+	while ((*sb)[i] != '\0' && (*sb)[i] != '\n')
+		i++;
+	if ((*sb)[i] == '\0')
 	{
-		*l = ft_strsub(sb[0], 0, num);
-		t = ft_strdup(sb[0] + num + 1);
-		ft_strdel(&sb[0]);
-		sb[0] = t;
-		if (sb[0][0] == '\0')
-			ft_strdel(&sb[0]);
+		free(*sb);
+		return (NULL);
 	}
-	else if (sb[0][num] == '\0')
+	tmp = ft_strsub(*sb, i + 1, ft_strlen(*sb) - i);
+	if (!tmp)
 	{
-		if (ret == BUFF_SIZE)
-			return (get_next_line(fd, l));
-		*l = ft_strdup(sb[0]);
-		ft_strdel(&sb[0]);
+		free(tmp);
+		return (NULL);
 	}
-	return (1);
+	free(*sb);
+	return (tmp);
 }
 
-int	get_next_line(const	int fd, char **line)
+static int	is_line_end(char *s)
 {
-	char		buff[BUFF_SIZE];
-	int		ret;
-	static char	*superbuff[255];
-	char		*tmpstr;
+	int	i;
 
-	ret = read(fd, buff, BUFF_SIZE);
-	while (ret > 0 && fd >= 0)
+	i = 0;
+	while (s[i] != '\n' && s[i] != '\0')
+		i++ ;
+	if (s[i] == '\n')
+		return (1);
+	return (0);
+}
+
+static	char	*get_each(char **sb)
+{
+	char	*l;
+	int		i;
+
+	i = 0;
+	if (!sb)
+		return (NULL);
+	while ((*sb)[i] != '\0' && (*sb)[i] != '\n')
+		i++;
+	l = ft_strsub(*sb, 0, i + is_line_end(*sb));
+	if (!l)
 	{
-		buff[ret] = '\0';
-		if (superbuff[0] == NULL)
-			superbuff[0] = ft_strnew(1);
-		tmpstr = ft_strjoin(superbuff[0], buff);
-		ft_strdel(&superbuff[0]);
-		superbuff[0] = tmpstr;
-		if (ft_strchr(superbuff[0], '\n'))
-			break ;
+		free(l);
+		return (NULL);
 	}
-	if (fd < 0 || line == NULL || ret < 0)
-		return (-1);
-	else if (ret == 0 && (superbuff[0] == NULL || superbuff[0][0] == '\0'))
-		return (0);
-	return (ft_read_frkg_line(superbuff, fd, line, ret));
+	return (l);
+}
+
+static int	read_all_lines(int fd, char **b, char **sb, char **line)
+{
+	int		bytes;
+	char	*tmp;
+
+	bytes = 1;
+	while (is_line_end(*sb) != 1 && bytes > 0)
+	{
+		bytes = read(fd, *b, BUFFER_SIZE);
+		(*b)[bytes] = '\0';
+		tmp = *sb;
+		*sb = ft_strjoin(tmp, *b);
+		free(tmp);
+	}
+	free(*b);
+	*line = get_each(sb);
+	if (**line == '\0')
+	{
+		free(*line);
+		*line = NULL;
+	}
+	*sb = get_all(sb);
+	return (bytes);
+}
+
+char	*get_next_line(int fd)
+{
+	char		*buff;
+	static char	*superbuff;
+	char		*line;
+	int			bytes;
+
+	buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buff || fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	if (read(fd, buff, 0) < 0)
+	{
+		free(buff);
+		return (NULL);
+	}
+	if (!superbuff)
+		superbuff = ft_strdup("");
+	bytes = read_all_lines(fd, &buff, &superbuff, &line);
+	if (bytes == 0 && !line)
+		return (NULL);
+	return (line);
 }

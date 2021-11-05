@@ -6,7 +6,7 @@
 /*   By: mhuerta <mhuerta@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 18:58:37 by mhuerta           #+#    #+#             */
-/*   Updated: 2021/11/05 05:08:00 by melissa          ###   ########.fr       */
+/*   Updated: 2021/11/05 16:19:54 by melissa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
-# define BUFF_SIZE 5
 
-int		get_next_line(const int fd, char **line);
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 128
+# endif
+
+char	*get_next_line(int fd);
 void	ft_strdel(char **as);
 char	*ft_strnew(size_t size);
 char	*ft_strsub(char const *s, unsigned int start, size_t len);

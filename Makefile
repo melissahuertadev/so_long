@@ -6,7 +6,7 @@
 #    By: mhuerta <mhuerta@student.42.us.org>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/22 11:48:08 by mhuerta           #+#    #+#              #
-#    Updated: 2021/11/05 05:20:22 by melissa          ###   ########.fr        #
+#    Updated: 2021/11/05 05:56:46 by melissa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME = so_long
 
-SRCS_FILES = so_long.c scene_map.c error.c
+SRCS_FILES = so_long.c scene_map.c map_validation.c error.c
 SRCS_DIR = srcs
 
 HEADER_FILE = includes/so_long.h

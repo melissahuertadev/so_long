@@ -6,20 +6,11 @@
 /*   By: mhuerta <mhuerta@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 03:06:36 by mhuerta           #+#    #+#             */
-/*   Updated: 2021/10/18 14:13:33 by mhuerta          ###   ########.fr       */
+/*   Updated: 2021/11/05 07:42:31 by melissa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-/*
-**Allocates (with malloc(3)) and returns a “fresh” string
-**ending with ’\0’, result of the concatenation of s1 and s2.
-**If the allocation fails the function returns NULL.
-**Param 1: prefix string | Param 2: suffix string.
-**
-**-> return value: “fresh” string result of the concatenation.
-*/
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

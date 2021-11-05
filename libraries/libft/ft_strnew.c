@@ -6,7 +6,7 @@
 /*   By: mhuerta <mhuerta@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 03:04:34 by mhuerta           #+#    #+#             */
-/*   Updated: 2021/11/05 05:07:09 by melissa          ###   ########.fr       */
+/*   Updated: 2021/11/05 08:49:18 by melissa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strnew(size_t size)
 
 	i = 0;
 	s = (char *)malloc(sizeof(char) * size);
-	if(!s)
+	if (!s)
 		return (NULL);
 	while (s[i])
 	{
