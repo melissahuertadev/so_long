@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   ft_strnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhuerta <mhuerta@42.fr>                    +#+  +:+       +#+        */
+/*   By: mhuerta <mhuerta@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/29 06:10:35 by mhuerta           #+#    #+#             */
-/*   Updated: 2021/11/05 04:13:52 by melissa          ###   ########.fr       */
+/*   Created: 2019/07/29 03:04:34 by mhuerta           #+#    #+#             */
+/*   Updated: 2021/11/05 05:07:09 by melissa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+char	*ft_strnew(size_t size)
 {
-	t_game        game;
-	if(ac != 2)
-		error_message("Please, enter a map and only ONE map.");
-	scene_init(&game, av[1]);
-	 
-	return (0);
+	char	*s;
+	int		i;
+
+	i = 0;
+	s = (char *)malloc(sizeof(char) * size);
+	if(!s)
+		return (NULL);
+	while (s[i])
+	{
+		s[i] = '\0';
+		i++;
+	}
+	return (s);
 }
