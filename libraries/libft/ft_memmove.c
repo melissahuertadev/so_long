@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhuerta <mhuerta@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/29 03:06:36 by mhuerta           #+#    #+#             */
-/*   Updated: 2021/11/06 01:08:17 by melissa          ###   ########.fr       */
+/*   Created: 2019/07/29 03:08:16 by mhuerta           #+#    #+#             */
+/*   Updated: 2021/11/06 01:01:28 by melissa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+void	*ft_memmove(void *d, const void *s, size_t l)
 {
-	char	*ns;
-	int		len;
+	char	*dst;
+	char	*src;
 
-	if (!s1 && !s2)
-		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2) + 1;
-	ns = malloc(sizeof(char) * len);
-	if (!ns)
-		return (NULL);
-	ft_memmove(ns, s1, ft_strlen(s1));
-	ft_memmove(ns + ft_strlen(s1), s2, ft_strlen(s2));
-	ns[len - 1] = '\0';
-	return (ns);
+	dst = (char *)d;
+	src = (char *)s;
+	if (d == s)
+		return (d);
+	if (src < dst)
+	{
+		while (l--)
+			*(dst + l) = *(src + l);
+		return (d);
+	}
+	while (l--)
+		*dst++ = *src++;
+	return (d);
 }

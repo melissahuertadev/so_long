@@ -6,7 +6,7 @@
 #    By: mhuerta <mhuerta@student.42.us.org>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/29 02:31:48 by mhuerta           #+#    #+#              #
-#    Updated: 2021/11/05 06:05:28 by melissa          ###   ########.fr        #
+#    Updated: 2021/11/05 18:42:40 by melissa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ NAME = libft.a
 
 SRCS = ft_putstr_fd.c ft_putchar_fd.c ft_split.c ft_countwords.c ft_strjoin.c\
 	ft_strlen.c ft_strcat.c ft_strcpy.c ft_strnstr.c ft_strdel.c \
-	ft_strchr.c ft_strdup.c ft_strsub.c ft_strnew.c get_next_line.c
+	ft_strchr.c ft_strdup.c ft_strsub.c ft_strnew.c ft_memmove.c \
+	get_next_line.c
 OBJS = $(SRCS:.c=.o)
 
 CFLAGS = -Wall -Werror -Wextra
