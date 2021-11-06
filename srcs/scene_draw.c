@@ -1,19 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   scene_draw.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhuerta <mhuerta@42.fr>                    +#+  +:+       +#+        */
+/*   By: mhuerta <mhuerta@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/29 06:10:35 by mhuerta           #+#    #+#             */
-/*   Updated: 2021/11/05 02:40:04 by melissa          ###   ########.fr       */
+/*   Created: 2021/11/01 11:11:42 by mhuerta           #+#    #+#             */
+/*   Updated: 2021/11/06 01:25:48 by mhuerta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
-
-void	error_message(char *m)
-{
-	printf("%sError detail: %s%s\n", RED, m, NRM);
-	exit(1);
-}
